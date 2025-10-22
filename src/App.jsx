@@ -22,13 +22,20 @@ function App() {
     return true;
   });
 
+  // nowa funkcja do czyszczenia ukończonych zadań
+  const clearCompleted = () => {
+    setTasks(prev => prev.filter(task => !task.completed));
+  };
+
+  const activeCount = tasks.filter(task => !task.completed).length;
+
   return (
     <div className="app">
       <ThemeToggle />
       <h1>Taskify</h1>
       <TaskInput setTasks={setTasks} />
 
-      {/* Filtry */}
+      {/*  Pasek filtrów */}
       <motion.div
         className="filter-bar"
         initial={{ opacity: 0, y: -10 }}
@@ -55,7 +62,30 @@ function App() {
         </button>
       </motion.div>
 
-      {/*  Lista zadań */}
+      {/* Licznik + przycisk czyszczenia */}
+      <motion.div
+        className="task-stats"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+      >
+        <span className="task-counter">
+          {activeCount === 0
+            ? "Brak aktywnych zadań 🎉"
+            : `${activeCount} aktywn${activeCount === 1 ? "e" : "ych"} zadań`}
+        </span>
+
+        {tasks.some(t => t.completed) && (
+          <button
+            className="clear-btn"
+            onClick={clearCompleted}
+            title="Usuń ukończone zadania"
+          >
+            Usuń ukończone ✕
+          </button>
+        )}
+      </motion.div>
+
       <TaskList tasks={filteredTasks} setTasks={setTasks} />
     </div>
   );

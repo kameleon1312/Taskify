@@ -255,3 +255,41 @@ h1 {
     }
   }
 }
+
+.task-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0 24px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: $radius;
+  font-size: 14px;
+  color: var(--muted);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+
+  .task-counter {
+    font-weight: 500;
+    color: var(--fg);
+  }
+
+  .clear-btn {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: $radius;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.25s ease;
+
+    &:hover {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 0 14px rgba(77, 148, 255, 0.25);
+    }
+  }
+}
