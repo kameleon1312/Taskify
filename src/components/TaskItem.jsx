@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 function TaskItem({ task, toggleTask, deleteTask }) {
+  
   return (
     <motion.li
       className={`task-item ${task.completed ? "done" : ""}`}
