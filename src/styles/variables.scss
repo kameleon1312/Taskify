@@ -1,8 +1,22 @@
-$bg: #0b0d10;
-$fg: #f5f7fa;
-$accent: #4D94FF;
-$success: #37D67A;
-$muted: #9aa0a6;
-$card: rgba(255, 255, 255, 0.04);
-$shadow: 0 0 40px rgba(77, 148, 255, 0.15);
+/* ================================================
+   Taskify™ Theme Variables – Dark & Light Mode
+   ================================================ */
+
 $radius: 14px;
+$shadow: 0 0 40px rgba(77, 148, 255, 0.15);
+
+/* ---- DARK THEME ---- */
+$dark-bg: #0b0d10;
+$dark-fg: #f5f7fa;
+$dark-card: rgba(255, 255, 255, 0.04);
+$dark-accent: #4D94FF;
+$dark-success: #37D67A;
+$dark-muted: #9aa0a6;
+
+/* ---- LIGHT THEME ---- */
+$light-bg: #f7f9fc;
+$light-fg: #0d1117;
+$light-card: #ffffff;
+$light-accent: #3D7DFF;
+$light-success: #27c269;
+$light-muted: #6b7280;

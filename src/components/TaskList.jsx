@@ -1,5 +1,5 @@
 import React from "react";
-
+import { AnimatePresence, motion } from "framer-motion";
 import TaskItem from "./TaskItem.jsx";
 
 function TaskList({ tasks, setTasks }) {
@@ -16,20 +16,35 @@ function TaskList({ tasks, setTasks }) {
   };
 
   if (tasks.length === 0) {
-    return <p className="empty">Brak zadań 🎯</p>;
+    return (
+      <motion.p
+        className="empty"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        Brak zadań 🎯
+      </motion.p>
+    );
   }
 
   return (
-    <ul className="task-list">
-      {tasks.map(task => (
-        <TaskItem
-          key={task.id}
-          task={task}
-          toggleTask={toggleTask}
-          deleteTask={deleteTask}
-        />
-      ))}
-    </ul>
+    <motion.ul
+      className="task-list"
+      layout
+      transition={{ type: "spring", damping: 18, stiffness: 120 }}
+    >
+      <AnimatePresence>
+        {tasks.map(task => (
+          <TaskItem
+            key={task.id}
+            task={task}
+            toggleTask={toggleTask}
+            deleteTask={deleteTask}
+          />
+        ))}
+      </AnimatePresence>
+    </motion.ul>
   );
 }
 
