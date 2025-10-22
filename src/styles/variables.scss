@@ -1,22 +1,69 @@
-/* ================================================
-   Taskify™ Theme Variables – Dark & Light Mode
-   ================================================ */
+/* ============================================================
+   🎨 TASKIFY™ THEME VARIABLES v3.0
+   Autor: Szymon Pochopień
+   Styl: Elevated Neon / Modern Productivity
+   ============================================================ */
 
+/* ==== GLOBAL ==== */
 $radius: 14px;
 $shadow: 0 0 40px rgba(77, 148, 255, 0.15);
 
-/* ---- DARK THEME ---- */
-$dark-bg: #0b0d10;
-$dark-fg: #f5f7fa;
-$dark-card: rgba(255, 255, 255, 0.04);
-$dark-accent: #4D94FF;
-$dark-success: #37D67A;
-$dark-muted: #9aa0a6;
+/* ============================================================
+   🌑 DARK THEME – Deep Neon Glass
+   ============================================================ */
+/*
+Inspiracja: Linear, Raycast, Notion Dark.
+Ciemne, nasycone tony z kontrastowym neonowym akcentem.
+*/
 
-/* ---- LIGHT THEME ---- */
-$light-bg: #f7f9fc;
-$light-fg: #0d1117;
-$light-card: #ffffff;
-$light-accent: #3D7DFF;
-$light-success: #27c269;
-$light-muted: #6b7280;
+$dark-bg: #090b10;                // głębia tła (prawie czarny z lekkim błękitem)
+$dark-fg: #f6f8ff;                // bardzo jasny, chłodny biały
+$dark-card: rgba(255, 255, 255, 0.05);  // przezroczysta karta – efekt szkła
+$dark-accent: #4D9FFF;            // chłodny niebieski neon
+$dark-success: #37D67A;           // miętowa zieleń – pozytywne akcje
+$dark-muted: #9ba3b0;             // zgaszony tekst / placeholder
+
+// Alternatywne akcenty (możesz dodać je później np. do nowych sekcji)
+$dark-warning: #f0ad4e;           // złoto-pomarańczowy dla alertów
+$dark-error: #ff5c5c;             // intensywny róż-czerwony dla błędów
+$dark-gradient: linear-gradient(135deg, #4D9FFF 0%, #37D67A 100%);
+
+
+/* ============================================================
+   ☀️ LIGHT THEME – Minimal Clarity
+   ============================================================ */
+/*
+Inspiracja: Todoist, Cron, Notion Light.
+Czysty, jasny interfejs z lekkimi pastelowymi refleksami.
+*/
+
+$light-bg: #f5f7fa;               // bardzo jasne tło, neutralne
+$light-fg: #0f172a;               // ciemny granat zamiast czystej czerni (łagodniejszy)
+$light-card: #ffffff;             // czysta karta z cieniem
+$light-accent: #3D7DFF;           // klasyczny niebieski z nutą ultramaryny
+$light-success: #27c269;          // żywa zieleń – wzmocniony kontrast
+$light-muted: #6b7280;            // zgaszony szary dla tekstu pomocniczego
+
+$light-warning: #f6b94c;
+$light-error: #ff5959;
+$light-gradient: linear-gradient(135deg, #3D7DFF 0%, #27c269 100%);
+
+
+/* ============================================================
+   💫 SPECIAL ACCENTS (UNIVERSAL)
+   ============================================================ */
+/*
+Akcenty użyteczne np. przy wykresach, focus mode, lub metrykach.
+*/
+
+$accent-blue: #4D94FF;
+$accent-green: #37D67A;
+$accent-pink: #E15FFF;
+$accent-yellow: #FFD166;
+$accent-orange: #FF8A4C;
+$accent-cyan: #2EDCFF;
+$accent-red: #FF4D4D;
+
+/* Subtelne światła / gradienty tła */
+$bg-glow-1: radial-gradient(circle at 20% 30%, rgba(77,148,255,0.08), transparent 70%);
+$bg-glow-2: radial-gradient(circle at 80% 80%, rgba(55,214,122,0.06), transparent 70%);
