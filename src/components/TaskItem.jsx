@@ -1,33 +1,48 @@
+// ============================================================
+//  TaskItem – Pojedyncze zadanie na liście
+// Opis: Wyświetla zadanie z możliwością edycji, ukończenia,
+//       usunięcia oraz kolorowym oznaczeniem terminu (deadline).
+// ============================================================
+
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 function TaskItem({ task, toggleTask, deleteTask, updateTask }) {
+  // ==========================================================
+  // Stan lokalny (edycja tekstu)
+  // ==========================================================
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(task.text);
 
+  // ==========================================================
+  //  Status terminu (deadline)
+  // ==========================================================
   const today = new Date();
   const deadlineDate = task.deadline ? new Date(task.deadline) : null;
 
-  // 🔹 Ustal status koloru (deadline)
   let statusColor = "";
   if (deadlineDate) {
     if (deadlineDate.toDateString() === today.toDateString()) {
-      statusColor = "today"; // 🟠 dziś
+      statusColor = "today"; // 🟠 Dzisiaj
     } else if (deadlineDate < today) {
-      statusColor = "overdue"; // 🔴 po terminie
+      statusColor = "overdue"; // 🔴 Po terminie
     } else {
-      statusColor = "upcoming"; // 🟢 przed terminem
+      statusColor = "upcoming"; // 🟢 Nadchodzące
     }
   }
 
-  // 🔹 Zapis edycji
+  // ==========================================================
+  //  Zapis edycji zadania
+  // ==========================================================
   const handleSave = () => {
-    if (editText.trim() !== "") {
-      updateTask(task.id, editText.trim());
-    }
+    const trimmed = editText.trim();
+    if (trimmed !== "") updateTask(task.id, trimmed);
     setIsEditing(false);
   };
 
+  // ==========================================================
+  //  RENDER
+  // ==========================================================
   return (
     <motion.li
       className={`task-item ${task.completed ? "done" : ""} ${statusColor}`}
@@ -37,16 +52,17 @@ function TaskItem({ task, toggleTask, deleteTask, updateTask }) {
       exit={{ opacity: 0, y: 10 }}
       transition={{ duration: 0.25 }}
     >
-      {/* Checkbox */}
+      {/*  Checkbox ukończenia */}
       <button
         className="checkbox"
         aria-pressed={task.completed}
         onClick={() => toggleTask(task.id)}
+        title={task.completed ? "Oznacz jako nieukończone" : "Oznacz jako ukończone"}
       >
         {task.completed ? "✔" : ""}
       </button>
 
-      {/* Tekst lub pole edycji */}
+      {/*  Tekst lub pole edycji */}
       <div className="text-area">
         {isEditing ? (
           <motion.input
@@ -72,7 +88,7 @@ function TaskItem({ task, toggleTask, deleteTask, updateTask }) {
           </motion.span>
         )}
 
-        {/* 🔹 Termin (jeśli ustawiony) */}
+        {/*  Wyświetlanie terminu */}
         {task.deadline && (
           <small className="deadline">
             Termin: {new Date(task.deadline).toLocaleDateString()}
@@ -80,12 +96,13 @@ function TaskItem({ task, toggleTask, deleteTask, updateTask }) {
         )}
       </div>
 
-      {/* Usuń zadanie */}
+      {/*  Usuń zadanie */}
       <motion.button
         className="remove"
         onClick={() => deleteTask(task.id)}
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
+        title="Usuń zadanie"
       >
         ✕
       </motion.button>

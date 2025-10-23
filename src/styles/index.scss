@@ -1,10 +1,11 @@
 /* ============================================================
-   🎨 TASKIFY™ UI v3.0
+    TASKIFY™ UI v3.0
    Autor: Szymon Pochopień
    Styl: Ultra Glassmorphism / Neon Glow / Professional Polish
    ============================================================ */
 
 @use "./variables" as *;
+@use "./pwa";
 
 /* ============================================================
    1️⃣ GLOBAL SETTINGS
@@ -49,7 +50,7 @@ body::before {
 }
 
 /* ============================================================
-   🌌  AMBIENT BACKGROUND GLOW
+     AMBIENT BACKGROUND GLOW
    ============================================================ */
 
 body::before,

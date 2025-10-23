@@ -1,9 +1,20 @@
+// ============================================================
+//  TaskInput – Dodawanie nowych zadań
+// Opis: Pozwala użytkownikowi wprowadzić treść zadania i opcjonalny termin.
+// ============================================================
+
 import React, { useState } from "react";
 
 function TaskInput({ setTasks }) {
+  // ==========================================================
+  //  Stan komponentu
+  // ==========================================================
   const [text, setText] = useState("");
-  const [deadline, setDeadline] = useState(""); // 🔹 nowy stan
+  const [deadline, setDeadline] = useState("");
 
+  // ==========================================================
+  //  Dodawanie nowego zadania
+  // ==========================================================
   const addTask = () => {
     const value = text.trim();
     if (!value) return;
@@ -12,35 +23,40 @@ function TaskInput({ setTasks }) {
       id: Date.now(),
       text: value,
       completed: false,
-      deadline: deadline || null, // jeśli brak daty, zostaje null
+      deadline: deadline || null,
     };
 
-    setTasks(prev => [...prev, newTask]);
+    setTasks((prev) => [...prev, newTask]);
     setText("");
     setDeadline("");
   };
 
+  // ==========================================================
+  //  RENDER
+  // ==========================================================
   return (
     <div className="task-input">
+      {/*  Pole tekstowe */}
       <input
         type="text"
         placeholder="Dodaj nowe zadanie..."
         value={text}
-        onChange={e => setText(e.target.value)}
-        onKeyDown={e => e.key === "Enter" && addTask()}
+        onChange={(e) => setText(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && addTask()}
         aria-label="Wpisz treść zadania"
       />
 
-      {/* 🔹 nowe pole wyboru daty */}
+      {/* n Pole wyboru daty */}
       <input
         type="date"
         value={deadline}
-        onChange={e => setDeadline(e.target.value)}
-        aria-label="Wybierz termin"
+        onChange={(e) => setDeadline(e.target.value)}
+        aria-label="Wybierz termin zadania"
       />
 
+      {/*  Przycisk dodania */}
       <button onClick={addTask} aria-label="Dodaj zadanie">
-        Dodaj
+        ➕ Dodaj
       </button>
     </div>
   );

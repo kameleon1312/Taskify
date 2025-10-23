@@ -1,13 +1,25 @@
+// ============================================================
+//  ProgressBar – Statystyki produktywności i pasek postępu
+// Opis: Wyświetla procent ukończonych zadań, dynamiczne animacje
+//       oraz efekt konfetti po osiągnięciu 100% 🎉
+// ============================================================
+
 import React, { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import confetti from "canvas-confetti";
 
 function ProgressBar({ tasks }) {
+  // ==========================================================
+  //  Obliczenia i dane statystyczne
+  // ==========================================================
   const total = tasks.length;
-  const completed = tasks.filter(t => t.completed).length;
+  const completed = tasks.filter((t) => t.completed).length;
   const active = total - completed;
   const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
 
+  // ==========================================================
+  //  Stan i animacja
+  // ==========================================================
   const [displayPercent, setDisplayPercent] = useState(0);
   const controls = useAnimation();
 
@@ -22,10 +34,12 @@ function ProgressBar({ tasks }) {
       } else if (current > percent) {
         current -= 1;
         setDisplayPercent(current);
-      } else clearInterval(interval);
+      } else {
+        clearInterval(interval);
+      }
     }, 10);
 
-    // wystrzał konfetti tylko gdy osiągniesz 100%
+    //  Wystrzał konfetti przy 100%
     if (percent === 100 && total > 0) {
       confetti({
         particleCount: 120,
@@ -37,8 +51,12 @@ function ProgressBar({ tasks }) {
     return () => clearInterval(interval);
   }, [percent, total]);
 
+  // ==========================================================
+  // RENDER
+  // ==========================================================
   return (
     <>
+      {/* Nagłówek postępu */}
       <div className="progress-header">
         <span>Postęp dnia</span>
         <motion.span
@@ -51,6 +69,7 @@ function ProgressBar({ tasks }) {
         </motion.span>
       </div>
 
+      {/* Pasek postępu */}
       <div className="progress-bar">
         <motion.div
           className="progress-fill"
@@ -59,11 +78,17 @@ function ProgressBar({ tasks }) {
         />
       </div>
 
-      {/* zachowujemy Twoje 3 statystyki */}
+      {/* Statystyki liczbowo */}
       <div className="progress-stats">
-        <span>🧩 Wszystkie: <strong>{total}</strong></span>
-        <span>✅ Ukończone: <strong>{completed}</strong></span>
-        <span>🚀 Aktywne: <strong>{active}</strong></span>
+        <span>
+          🧩 Wszystkie: <strong>{total}</strong>
+        </span>
+        <span>
+          ✅ Ukończone: <strong>{completed}</strong>
+        </span>
+        <span>
+          🚀 Aktywne: <strong>{active}</strong>
+        </span>
       </div>
     </>
   );

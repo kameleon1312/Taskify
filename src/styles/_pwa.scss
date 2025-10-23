@@ -1,0 +1,45 @@
+/* ============================================================
+   📱 TASKIFY™ PWA ENHANCEMENTS
+   Dodatkowe style do wersji Progressive Web App
+   ============================================================ */
+
+/*  Ustawienia dla trybu standalone (po zainstalowaniu na ekranie) */
+@media all and (display-mode: standalone) {
+  body {
+    padding-top: 30px;
+    padding-bottom: 20px;
+  }
+
+  .app {
+    box-shadow: none;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .theme-toggle {
+    top: 10px;
+    right: 12px;
+    font-size: 13px;
+  }
+}
+
+/*  Responsywność dla urządzeń mobilnych */
+@media (max-width: 480px) {
+  body {
+    padding: 30px 10px;
+  }
+
+  .app {
+    max-width: 100%;
+    padding: 36px 20px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .task-input input,
+  .task-input button {
+    font-size: 14px;
+  }
+}

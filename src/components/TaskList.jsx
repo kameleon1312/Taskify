@@ -1,9 +1,17 @@
+// ============================================================
+//  TaskList – Lista wszystkich zadań
+// Opis: Renderuje kolekcję zadań, pozwala na ich edycję,
+//       usuwanie oraz oznaczanie jako ukończone.
+// ============================================================
+
 import React from "react";
-import TaskItem from "./TaskItem.jsx";
 import { AnimatePresence, motion } from "framer-motion";
+import TaskItem from "./TaskItem.jsx";
 
 function TaskList({ tasks, setTasks }) {
-  // 🔹 Zmienianie statusu ukończenia
+  // ==========================================================
+  //  Zmiana statusu ukończenia zadania
+  // ==========================================================
   const toggleTask = (id) => {
     setTasks((prev) =>
       prev.map((task) =>
@@ -12,12 +20,16 @@ function TaskList({ tasks, setTasks }) {
     );
   };
 
-  // 🔹 Usuwanie zadania
+  // ==========================================================
+  //  Usuwanie zadania
+  // ==========================================================
   const deleteTask = (id) => {
     setTasks((prev) => prev.filter((task) => task.id !== id));
   };
 
-  // 🔹 Edycja tekstu zadania (inline editing)
+  // ==========================================================
+  //  Edycja tekstu zadania (inline editing)
+  // ==========================================================
   const updateTask = (id, newText) => {
     setTasks((prev) =>
       prev.map((task) =>
@@ -26,6 +38,9 @@ function TaskList({ tasks, setTasks }) {
     );
   };
 
+  // ==========================================================
+  //  Widok pustej listy
+  // ==========================================================
   if (tasks.length === 0) {
     return (
       <motion.p
@@ -39,6 +54,9 @@ function TaskList({ tasks, setTasks }) {
     );
   }
 
+  // ==========================================================
+  //  RENDER LISTY
+  // ==========================================================
   return (
     <motion.ul
       className="task-list"
@@ -53,7 +71,7 @@ function TaskList({ tasks, setTasks }) {
             task={task}
             toggleTask={toggleTask}
             deleteTask={deleteTask}
-            updateTask={updateTask} // 🔹 przekazujemy funkcję do edycji
+            updateTask={updateTask}
           />
         ))}
       </AnimatePresence>
