@@ -1,15 +1,17 @@
 /* ============================================================
-   TASKINER™ SPLASH SCREEN
-   Styl: neon / glassmorphism
+   TASKINER™ SPLASH SCREEN v3.5
+   Styl: Neon / Glassmorphism / Responsive
    ============================================================ */
 
 .splash {
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 200vh;
+  width: 100%;
   background: radial-gradient(
       circle at 20% 20%,
       rgba(77, 148, 255, 0.15),
@@ -24,34 +26,113 @@
   color: #fff;
   text-align: center;
   overflow: hidden;
+  z-index: 9999;
+  padding: 0 1.5rem;
 }
 
+/* === LOGO === */
 .splash-logo {
-  font-size: 3rem;
+  font-size: clamp(2.2rem, 5vw, 3rem);
   font-weight: 800;
   background: linear-gradient(90deg, #4d94ff, #37d67a);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 20px rgba(77, 148, 255, 0.4);
   margin: 0;
+  line-height: 1.2;
+  letter-spacing: 0.6px;
+
   span {
-    font-size: 1.5rem;
+    font-size: 0.6em;
     vertical-align: super;
+    opacity: 0.85;
   }
 }
 
+/* === TAGLINE === */
 .splash-tagline {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.8);
   margin-top: 14px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
+  max-width: 90%;
+  line-height: 1.5;
 }
 
+/* === LOADER === */
 .splash-loader {
-  margin-top: 40px;
+  margin-top: 36px;
   width: 0%;
-  height: 3px;
+  height: 4px;
   background: linear-gradient(90deg, #4d94ff, #37d67a);
   border-radius: 4px;
   box-shadow: 0 0 20px rgba(77, 148, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.7) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: loaderShine 2.4s infinite linear;
+  }
+}
+
+/* === ANIMACJA LOADERA === */
+@keyframes loaderShine {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+/* ============================================================
+   📱 MOBILE / TABLET OPTIMIZACJE
+   ============================================================ */
+@media (max-width: 768px) {
+  .splash {
+    padding: 0 1rem;
+  }
+
+  .splash-logo {
+    font-size: clamp(1.8rem, 6vw, 2.4rem);
+    text-shadow: 0 0 12px rgba(77, 148, 255, 0.4);
+  }
+
+  .splash-tagline {
+    font-size: 0.95rem;
+    margin-top: 10px;
+    max-width: 95%;
+  }
+
+  .splash-loader {
+    margin-top: 28px;
+    height: 3px;
+  }
+}
+
+/* ============================================================
+   🖥️ LARGE SCREENS (DESKTOP+)
+   ============================================================ */
+@media (min-width: 1200px) {
+  .splash-logo {
+    font-size: 3.5rem;
+  }
+
+  .splash-tagline {
+    font-size: 1.25rem;
+  }
+
+  .splash-loader {
+    height: 4px;
+    margin-top: 40px;
+  }
 }

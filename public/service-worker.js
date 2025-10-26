@@ -4,13 +4,13 @@
 //  Cel: Auto-update, cache control i pełne wsparcie PWA offline
 // ============================================================
 
-const CACHE_NAME = "taskiner-cache-v4.3";
+const CACHE_NAME = "taskiner-cache-v4.4";
 const URLS_TO_CACHE = [
   "/",
   "/index.html",
   "/manifest.json",
-  "/icons/icon-192x192.png",
-  "/icons/icon-512x512.png",
+  "/icons/icon-192x192-v2.png",
+  "/icons/icon-512x512-v2.png",
 ];
 
 // 🔧 Lokalny tryb dev — pomijamy SW, by nie zakłócać hot reload
