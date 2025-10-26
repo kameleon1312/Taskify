@@ -1,93 +1,93 @@
-🧠 Taskiner™ – Inteligentna Aplikacja do Zarządzania Zadaniami
+🧠 Taskiner™ – Smart Productivity Web App
 
-Taskiner to nowoczesna aplikacja do zarządzania zadaniami zbudowana w React + Vite, zaprojektowana z myślą o prostocie, płynności i estetyce.
-Łączy minimalistyczny design, efekt glassmorphism oraz subtelne mikroanimacje, tworząc eleganckie narzędzie zwiększające produktywność.
-W pełni PWA-ready – możesz ją zainstalować na komputerze lub telefonie i używać offline.
+Taskiner is a modern task management application built with React + Vite,
+designed for clarity, elegance, and productivity.
 
-⚙️ Technologie i narzędzia
-Kategoria	Technologia	Zastosowanie
-⚛️ Frontend	React 18	Komponentowa architektura i logika aplikacji
-🎨 Stylowanie	Sass (SCSS)	Efekty glassmorphism, motywy dark/light
-💾 Przechowywanie	LocalStorage API	Trwałe zapisywanie zadań i ustawień
-⚡ Bundler	Vite	Szybkie środowisko developerskie React
-🔁 PWA	Service Worker + Manifest	Tryb offline, cache, auto-aktualizacje
-▲ Hosting	Vercel	Automatyczne wdrażanie i hosting online
-✨ Funkcjonalności
+It combines minimalist design, glassmorphism effects, and smooth micro-animations to create a sleek and intuitive workspace.
+The app is fully PWA-ready, meaning it can be installed on any device and used offline with auto-updates.
 
-✅ Dodawanie, edycja i usuwanie zadań
+⚙️ Tech Stack
+Category	Technology	Purpose
+⚛️ Frontend	React 18	Component-based architecture and app logic
+🎨 Styling	Sass (SCSS)	Glassmorphism visuals, dark/light themes
+💾 Storage	LocalStorage API	Persistent data (tasks, settings)
+⚡ Bundler	Vite	Lightning-fast React development
+🔁 PWA	Service Worker + Manifest	Offline mode, caching, auto-update system
+▲ Hosting	Vercel	Continuous deployment & hosting
+✨ Features
 
-📅 Terminy zadań z kolorowym statusem:
+✅ Add, edit, and delete tasks
 
-🟢 Przed terminem
+📅 Set deadlines with colored status indicators:
 
-🟠 Dzisiaj
+🟢 Upcoming
 
-🔴 Po terminie
+🟠 Due today
 
-🔄 Filtry: wszystkie / aktywne / ukończone
+🔴 Overdue
 
-📊 Pasek produktywności pokazujący postęp dnia
+🔄 Filter by: All / Active / Completed
 
-📦 Eksport i import zadań (JSON)
+📊 Daily progress bar showing completion rate
 
-💾 Trwałe zapisywanie w localStorage
+📦 Export / Import tasks (JSON format)
 
-🌗 Tryb jasny / ciemny z zapamiętywaniem ustawień
+💾 Auto-save data in browser storage
 
-🌀 Mikrointerakcje i płynne animacje
+🌗 Dark / Light theme with memory persistence
 
-📱 Pełna responsywność (mobile + desktop)
+🌀 Micro-animations for smooth UX transitions
 
-🧩 Obsługa PWA – instalacja i działanie offline
+📱 Fully responsive design (mobile & desktop)
 
-🚀 System automatycznych aktualizacji przez Service Workera
+🧩 Installable PWA with offline support
 
-💎 Wrażenia wizualne i UX
+🚀 Automatic updates via Service Worker
 
-Glassmorphism UI – półprzezroczyste karty, neonowe akcenty i delikatny blur
+💎 Visual & UX Highlights
 
-System kolorów dynamicznych – płynne przejścia motywów
+Glassmorphism Interface – translucent cards, neon accents, and soft blur
 
-Płynne animacje – reakcje na kliknięcia, hover i zmiany stanu
+Dynamic Color System – fluid transitions between light & dark modes
 
-Minimalistyczny układ – skupienie na zadaniach bez rozpraszaczy
+Polished UX Details – soft glows, hover feedback, and subtle shadows
 
-Natychmiastowy feedback UX – miękkie cienie, glow, rozmycie tła
+Minimal Distractions – clean interface focused on task flow
 
-⚡ Jak uruchomić lokalnie
-# 1️⃣ Sklonuj repozytorium
-git clone https://github.com/<twoja-nazwa-uzytkownika>/taskiner.git
+⚡ Run Locally
+# 1️⃣ Clone the repository
+git clone https://github.com/<your-username>/taskiner.git
 
-# 2️⃣ Wejdź do katalogu projektu
+# 2️⃣ Navigate to the project
 cd taskiner
 
-# 3️⃣ Zainstaluj zależności
+# 3️⃣ Install dependencies
 npm install
 
-# 4️⃣ Uruchom aplikację w trybie developerskim
+# 4️⃣ Start development server
 npm run dev
 
 
-Aplikacja będzie dostępna pod adresem:
-🔗 http://localhost:5173
+Then open:
+👉 http://localhost:5173
 
-📲 Instalacja jako aplikacja PWA
+📲 Install as a PWA
 
-Otwórz aplikację w przeglądarce (Chrome / Edge / Safari)
+Open the app in Chrome, Edge, or Safari.
 
-Kliknij ikonę „Zainstaluj Taskiner” w pasku adresu lub menu
+Click “Install Taskiner” in the browser bar or app menu.
 
-Po instalacji aplikacja będzie działać offline
+Launch it from your home screen or desktop.
 
-Każda nowa wersja instaluje się automatycznie (auto-update)
+The app will work offline and auto-update on new releases.
 
+🚀 Live Demo
 
-🚀 Demo online
+🔗 taskiner.vercel.app
 
-🔗 Live: taskiner.vercel.app
+🪄 License
 
-🪄 Licencja
+Licensed under the MIT License — feel free to use, adapt, or extend it with proper attribution.
 
-Projekt na licencji MIT – możesz go swobodnie wykorzystywać i rozwijać z zachowaniem informacji o autorze.
-
-🌟 „Projektuj narzędzia, które sprawiają, że produktywność jest naturalna.”
+💡 "Design tools that make productivity feel effortless."
+— Szymon Pochopień, Taskiner Creator
