@@ -1,11 +1,13 @@
 // ============================================================
-//  TASKINER™ APP v3.1
-// Autor: Szymon Pochopień
-// Główna struktura aplikacji – zarządzanie stanem i logiką UI
-// Styl: Ultra Glassmorphism / Neon Productivity
+//  TASKINER™ APP v4.1
+//  Autor: Szymon Pochopień
+//  Funkcja: główna struktura aplikacji + SplashScreen component
+//  Styl: Ultra Glassmorphism / Neon Productivity
 // ============================================================
 
 import React, { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
+import SplashScreen from "./components/SplashScreen.jsx";
 import TaskInput from "./components/TaskInput.jsx";
 import TaskList from "./components/TaskList.jsx";
 import ThemeToggle from "./components/ThemeToggle.jsx";
@@ -18,54 +20,57 @@ import DataControls from "./components/DataControls.jsx";
 //  APP COMPONENT
 // ============================================================
 function App() {
+  // ------------------------------------------------------------
+  //  🧠 Splash screen state
+  // ------------------------------------------------------------
+  const [loading, setLoading] = useState(true);
 
-  // ============================================================
-//  Taskiner Install Prompt (Android PWA)
-// ============================================================
-
-let deferredPrompt;
-
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-
-  const installBtn = document.createElement("button");
-  installBtn.textContent = "📲 Zainstaluj Taskiner";
-  installBtn.className = "install-btn";
-  document.body.appendChild(installBtn);
-
-  installBtn.addEventListener("click", async () => {
-    installBtn.remove();
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    console.log(`User response to install: ${outcome}`);
-    deferredPrompt = null;
-  });
-});
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2500); // 2,5 sekundy
+    return () => clearTimeout(timer);
+  }, []);
 
   // ------------------------------------------------------------
-  //  Stan: lista zadań (z LocalStorage)
+  //  📲 PWA Install Prompt (Android)
+  // ------------------------------------------------------------
+  useEffect(() => {
+    let deferredPrompt;
+    const handler = (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+
+      const installBtn = document.createElement("button");
+      installBtn.textContent = "📲 Zainstaluj Taskiner";
+      installBtn.className = "install-btn";
+      document.body.appendChild(installBtn);
+
+      installBtn.addEventListener("click", async () => {
+        installBtn.remove();
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response to install: ${outcome}`);
+        deferredPrompt = null;
+      });
+    };
+
+    window.addEventListener("beforeinstallprompt", handler);
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  // ------------------------------------------------------------
+  //  🗂️ Lista zadań (LocalStorage)
   // ------------------------------------------------------------
   const [tasks, setTasks] = useState(() => {
     const saved = localStorage.getItem("tasks");
     return saved ? JSON.parse(saved) : [];
   });
 
-  // ------------------------------------------------------------
-  //  Stan: aktywny filtr (all / active / completed)
-  // ------------------------------------------------------------
   const [filter, setFilter] = useState("all");
 
-  // ------------------------------------------------------------
-  //  Synchronizacja zadań z LocalStorage
-  // ------------------------------------------------------------
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  // ------------------------------------------------------------
-  //  Filtrowanie i sortowanie (priorytet: najbliższy deadline)
-  // ------------------------------------------------------------
   const filteredTasks = tasks
     .filter((task) => {
       if (filter === "active") return !task.completed;
@@ -78,9 +83,6 @@ window.addEventListener("beforeinstallprompt", (e) => {
       return new Date(a.deadline) - new Date(b.deadline);
     });
 
-  // ------------------------------------------------------------
-  //  Usuwanie ukończonych zadań
-  // ------------------------------------------------------------
   const clearCompleted = () => {
     setTasks((prev) => prev.filter((task) => !task.completed));
   };
@@ -89,31 +91,26 @@ window.addEventListener("beforeinstallprompt", (e) => {
   //  RENDER APLIKACJI
   // ============================================================
   return (
-    <div className="app">
-      {/*  Przełącznik motywu */}
-      <ThemeToggle />
+    <>
+      {/* 🔷 SPLASH SCREEN (z komponentu) */}
+      <AnimatePresence mode="wait">
+        {loading && <SplashScreen key="splash" />}
+      </AnimatePresence>
 
-      {/*  Tytuł aplikacji */}
-      <h1>Taskiner</h1>
-
-      {/*  Pole dodawania zadań */}
-      <TaskInput setTasks={setTasks} />
-
-      {/*  Filtry zadań */}
-      <FilterBar filter={filter} setFilter={setFilter} />
-
-      {/*  Statystyki zadań */}
-      <TaskStats tasks={tasks} clearCompleted={clearCompleted} />
-
-      {/*  Pasek postępu produktywności */}
-      {tasks.length > 0 && <ProgressBar tasks={tasks} />}
-
-      {/*  Eksport /  Import danych */}
-      <DataControls tasks={tasks} setTasks={setTasks} />
-
-      {/*  Lista zadań */}
-      <TaskList tasks={filteredTasks} setTasks={setTasks} />
-    </div>
+      {/* 🔹 APP UI */}
+      {!loading && (
+        <div className="app">
+          <ThemeToggle />
+          <h1>Taskiner</h1>
+          <TaskInput setTasks={setTasks} />
+          <FilterBar filter={filter} setFilter={setFilter} />
+          <TaskStats tasks={tasks} clearCompleted={clearCompleted} />
+          {tasks.length > 0 && <ProgressBar tasks={tasks} />}
+          <DataControls tasks={tasks} setTasks={setTasks} />
+          <TaskList tasks={filteredTasks} setTasks={setTasks} />
+        </div>
+      )}
+    </>
   );
 }
 

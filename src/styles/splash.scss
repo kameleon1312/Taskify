@@ -1,0 +1,57 @@
+/* ============================================================
+   TASKINER™ SPLASH SCREEN
+   Styl: neon / glassmorphism
+   ============================================================ */
+
+.splash {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 200vh;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(77, 148, 255, 0.15),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(55, 214, 122, 0.1),
+      transparent 70%
+    ),
+    #0b0d10;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+.splash-logo {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #4d94ff, #37d67a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(77, 148, 255, 0.4);
+  margin: 0;
+  span {
+    font-size: 1.5rem;
+    vertical-align: super;
+  }
+}
+
+.splash-tagline {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 14px;
+  letter-spacing: 0.5px;
+}
+
+.splash-loader {
+  margin-top: 40px;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #4d94ff, #37d67a);
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(77, 148, 255, 0.3);
+}
