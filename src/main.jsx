@@ -1,7 +1,7 @@
 // ============================================================
-//  TASKINER™ ENTRY POINT v4.2
+//  TASKINER™ ENTRY POINT v4.3
 //  Autor: Szymon Pochopień
-//  Cel: React init + Global Styles + PWA auto-update (mobile ready)
+//  Cel: React Init + Global Styles + PWA Auto-Update (Stable Build)
 // ============================================================
 
 import React from "react";
@@ -12,7 +12,6 @@ import "./styles/index.scss";
 // ============================================================
 //  RENDER APP
 // ============================================================
-
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <App />
@@ -23,46 +22,47 @@ createRoot(document.getElementById("root")).render(
 //  SERVICE WORKER LOGIKA
 // ============================================================
 
-// 🔹 DEV: usuń starego SW lokalnie
+// 🔹 DEV: usuń stare SW lokalnie
 if (import.meta.env.MODE === "development" && "serviceWorker" in navigator) {
-  navigator.serviceWorker.getRegistrations().then((registrations) => {
-    registrations.forEach((registration) => {
-      registration.unregister().then(() => {
-        console.log("🧹 Stary Service Worker został usunięty (dev mode)");
-      });
+  navigator.serviceWorker.getRegistrations().then((regs) => {
+    regs.forEach((reg) => {
+      reg.unregister().then(() => console.log("🧹 SW usunięty (dev mode)"));
     });
   });
   console.log("🧩 Service Worker pominięty w trybie deweloperskim");
 }
 
-// 🔹 PROD: rejestracja SW
+// 🔹 PROD: rejestracja SW (działa w Vercel + mobilne PWA)
 if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
-      .register("/service-worker.js")
+      .register("/service-worker.js", { updateViaCache: "none" })
       .then((registration) => {
-        console.log("✅ Service Worker zarejestrowany:", registration.scope);
+        console.log("✅ SW zarejestrowany:", registration.scope);
 
-        // 🔁 Monitorowanie aktualizacji
+        // 🔁 Monitoruj aktualizacje
         registration.onupdatefound = () => {
           const newWorker = registration.installing;
-          if (newWorker) {
-            newWorker.onstatechange = () => {
-              if (
-                newWorker.state === "installed" &&
-                navigator.serviceWorker.controller
-              ) {
-                console.log("🔄 Nowa wersja Taskiner dostępna!");
-                showUpdateBanner(registration);
-              }
-            };
-          }
+          if (!newWorker) return;
+
+          newWorker.onstatechange = () => {
+            if (
+              newWorker.state === "installed" &&
+              navigator.serviceWorker.controller
+            ) {
+              console.log("🔄 Nowa wersja Taskiner dostępna!");
+              showUpdateBanner(registration);
+            }
+          };
         };
 
-        // 🕐 Sprawdzaj aktualizacje co 1 minutę (działa też w PWA)
-        setInterval(() => {
-          registration.update();
-        }, 60000);
+        // 🕐 Co 1 minutę sprawdzaj aktualizację
+        setInterval(() => registration.update(), 60000);
+
+        // 📱 Auto-refresh w tle po zmianie kontrolera
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          window.location.reload();
+        });
       })
       .catch((err) => console.error("❌ Błąd rejestracji SW:", err));
   });
@@ -73,7 +73,12 @@ if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
 // ============================================================
 
 function showUpdateBanner(registration) {
+  // Usuń stary baner, jeśli istnieje
+  const oldBanner = document.querySelector(".update-banner");
+  if (oldBanner) oldBanner.remove();
+
   const banner = document.createElement("div");
+  banner.className = "update-banner";
   banner.innerHTML = `
     <div style="
       position: fixed;
@@ -84,7 +89,7 @@ function showUpdateBanner(registration) {
       color: white;
       padding: 12px 20px;
       border-radius: 12px;
-      font-family: Inter, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 600;
       box-shadow: 0 4px 20px rgba(0,0,0,0.25);
       cursor: pointer;
@@ -101,10 +106,5 @@ function showUpdateBanner(registration) {
     if (registration.waiting) {
       registration.waiting.postMessage({ type: "SKIP_WAITING" });
     }
-  });
-
-  // Odśwież po aktywacji nowego SW
-  navigator.serviceWorker.addEventListener("controllerchange", () => {
-    window.location.reload();
   });
 }
