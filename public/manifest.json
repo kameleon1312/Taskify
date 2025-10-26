@@ -1,7 +1,7 @@
 {
-  "name": "Taskify",
-  "short_name": "Taskify",
-  "description": "Taskify™ – Smart Productivity App built with React",
+  "name": "Taskiner",
+  "short_name": "Taskiner",
+  "description": "Taskiner™ – Smart Productivity App built with React",
   "lang": "pl",
   "start_url": ".",
   "display": "standalone",

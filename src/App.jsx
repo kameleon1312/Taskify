@@ -1,5 +1,5 @@
 // ============================================================
-//  TASKIFY™ APP v3.1
+//  TASKINER™ APP v3.1
 // Autor: Szymon Pochopień
 // Główna struktura aplikacji – zarządzanie stanem i logiką UI
 // Styl: Ultra Glassmorphism / Neon Productivity

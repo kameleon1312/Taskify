@@ -1,5 +1,5 @@
 // ============================================================
-//  TASKIFY™ ENTRY POINT v3.1
+//  TASKINER™ ENTRY POINT v3.1
 // Autor: Szymon Pochopień
 // Cel: Inicjalizacja aplikacji React + styl globalny + PWA-ready
 // ============================================================

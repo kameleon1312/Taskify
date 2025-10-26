@@ -1,4 +1,4 @@
-const CACHE_NAME = "taskify-cache-v1";
+const CACHE_NAME = "taskiner-cache-v1";
 const urlsToCache = [
   "/",
   "/index.html",
