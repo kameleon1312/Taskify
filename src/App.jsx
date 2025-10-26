@@ -18,6 +18,31 @@ import DataControls from "./components/DataControls.jsx";
 //  APP COMPONENT
 // ============================================================
 function App() {
+
+  // ============================================================
+//  Taskiner Install Prompt (Android PWA)
+// ============================================================
+
+let deferredPrompt;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  const installBtn = document.createElement("button");
+  installBtn.textContent = "📲 Zainstaluj Taskiner";
+  installBtn.className = "install-btn";
+  document.body.appendChild(installBtn);
+
+  installBtn.addEventListener("click", async () => {
+    installBtn.remove();
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User response to install: ${outcome}`);
+    deferredPrompt = null;
+  });
+});
+
   // ------------------------------------------------------------
   //  Stan: lista zadań (z LocalStorage)
   // ------------------------------------------------------------

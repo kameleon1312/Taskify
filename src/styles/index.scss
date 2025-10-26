@@ -495,3 +495,147 @@ body[data-theme="light"] {
     transform: scale(1.05);
   }
 }
+
+/* ============================================================
+   🔟 RESPONSIVE DESIGN (MOBILE OPTIMIZATION)
+   ============================================================ */
+
+/* --- TELEFONY (do 600px) --- */
+@media (max-width: 600px) {
+  html, body {
+    padding: 30px 14px;
+    align-items: flex-start;
+    background: radial-gradient(
+        circle at 30% 10%,
+        rgba(77, 148, 255, 0.06),
+        transparent 60%
+      ),
+      radial-gradient(
+        circle at 90% 90%,
+        rgba(55, 214, 122, 0.05),
+        transparent 70%
+      ),
+      var(--bg);
+  }
+
+  .app {
+    width: 100%;
+    max-width: 100%;
+    padding: 28px 18px 34px;
+    border-radius: 14px;
+    box-shadow: 0 0 20px rgba(77, 148, 255, 0.25);
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+  }
+
+  .task-input {
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+    input {
+      font-size: 14px;
+      padding: 11px 12px;
+    }
+
+    button {
+      font-size: 14px;
+      padding: 11px;
+    }
+  }
+
+  .filter-bar {
+    flex-wrap: wrap;
+    gap: 8px;
+    button {
+      flex: 1 1 45%;
+      font-size: 13px;
+      padding: 8px 10px;
+    }
+  }
+
+  .task-item {
+    grid-template-columns: 28px 1fr 28px;
+    padding: 8px 10px;
+    font-size: 14px;
+
+    .text { font-size: 14px; }
+    .deadline { font-size: 12px; }
+    .remove { font-size: 13px; padding: 4px; }
+  }
+
+  .task-stats {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+    .clear-btn {
+      width: 100%;
+      font-size: 13px;
+      padding: 8px 12px;
+    }
+  }
+
+  .data-controls {
+    flex-direction: column;
+    gap: 10px;
+    button, .import-label {
+      width: 100%;
+      font-size: 13px;
+      padding: 10px 12px;
+    }
+  }
+
+  .theme-toggle {
+    top: 12px;
+    right: 12px;
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+/* --- TABLETY (601px–900px) --- */
+@media (min-width: 601px) and (max-width: 900px) {
+  html, body {
+    padding: 40px 24px;
+  }
+
+  .app {
+    max-width: 540px;
+    padding: 36px 28px 40px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .task-input input, .task-input button {
+    font-size: 15px;
+  }
+}
+
+
+
+.install-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--accent), var(--success));
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 0 18px rgba(77, 148, 255, 0.4);
+  cursor: pointer;
+  z-index: 1000;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
