@@ -1,5 +1,9 @@
-const CACHE_NAME = "taskiner-cache-v1";
-const urlsToCache = [
+// ==============================
+// Taskiner Service Worker (v2)
+// ==============================
+
+const CACHE_NAME = "taskiner-cache-v2";
+const URLS_TO_CACHE = [
   "/",
   "/index.html",
   "/manifest.json",
@@ -7,42 +11,65 @@ const urlsToCache = [
   "/icons/icon-512x512.png"
 ];
 
-// Instalacja service workera
+// Czy uruchomiono lokalnie?
+const isLocalhost =
+  self.location.hostname === "localhost" ||
+  self.location.hostname === "127.0.0.1";
+
+// Instalacja – cache tylko w produkcji
 self.addEventListener("install", (event) => {
+  if (isLocalhost) return;
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(URLS_TO_CACHE))
   );
 });
 
-// Aktywacja (czyszczenie starych cache)
+// Aktywacja – usuń stare cache
 self.addEventListener("activate", (event) => {
+  if (isLocalhost) return;
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
+    caches.keys().then((cacheNames) =>
+      Promise.all(
         cacheNames
           .filter((name) => name !== CACHE_NAME)
           .map((name) => caches.delete(name))
-      );
-    })
+      )
+    )
   );
 });
 
-// Fetch (cache-first strategy)
+// Obsługa fetch – cache-first, ale filtruj nie-HTTP
 self.addEventListener("fetch", (event) => {
+  if (isLocalhost) return;
+  if (!event.request.url.startsWith("http")) return;
+
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return (
-        response ||
-        fetch(event.request).then((res) => {
-          const resClone = res.clone();
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) return cachedResponse;
+
+      return fetch(event.request)
+        .then((networkResponse) => {
+          if (
+            !networkResponse ||
+            networkResponse.status !== 200 ||
+            networkResponse.type !== "basic"
+          ) {
+            return networkResponse;
+          }
+
+          const responseClone = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, resClone);
+            cache.put(event.request, responseClone);
           });
-          return res;
+
+          return networkResponse;
         })
-      );
+        .catch(() => {
+          // fallback offline dla widoków nawigacyjnych
+          if (event.request.mode === "navigate") {
+            return caches.match("/index.html");
+          }
+        });
     })
   );
 });

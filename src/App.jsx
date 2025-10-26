@@ -69,7 +69,7 @@ function App() {
       <ThemeToggle />
 
       {/*  Tytuł aplikacji */}
-      <h1>Taskify</h1>
+      <h1>Taskiner</h1>
 
       {/*  Pole dodawania zadań */}
       <TaskInput setTasks={setTasks} />

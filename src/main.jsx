@@ -35,3 +35,13 @@ if ('serviceWorker' in navigator) {
       .catch((err) => console.error('❌ Błąd rejestracji SW:', err));
   });
 }
+
+
+if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then((reg) => console.log("✅ Service Worker zarejestrowany:", reg.scope))
+      .catch((err) => console.error("❌ Błąd rejestracji SW:", err));
+  });
+}
