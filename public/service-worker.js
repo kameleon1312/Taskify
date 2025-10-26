@@ -13,7 +13,7 @@ const URLS_TO_CACHE = [
   "/icons/icon-512x512.png",
 ];
 
-// ✅ Lokalny tryb dev — pomijamy SW, by nie zakłócać hot reload
+//  Lokalny tryb dev — pomijamy SW, by nie zakłócać hot reload
 const isLocalhost =
   self.location.hostname === "localhost" ||
   self.location.hostname === "127.0.0.1";
