@@ -57,22 +57,31 @@ function TaskInput({ setTasks }) {
       />
 
       {/*  Sekcja daty i godziny */}
-      <div className="datetime-inputs">
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          aria-label="Wybierz datę zadania"
-        />
-        <input
-          type="time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-          aria-label="Wybierz godzinę zadania"
-        />
-      </div>
+
+    <div className="datetime-inputs">
+    <div className="custom-input">
+     {!date && <span className="placeholder">📅 Wybierz datę</span>}
+    <input
+      type="date"
+      value={date}
+      onChange={(e) => setDate(e.target.value)}
+      aria-label="Wybierz datę zadania"
+    />
+   </div>
+
+  <div className="custom-input">
+    {!time && <span className="placeholder">⏰ Wybierz godzinę</span>}
+    <input
+      type="time"
+      value={time}
+      onChange={(e) => setTime(e.target.value)}
+      aria-label="Wybierz godzinę zadania"
+    />
+  </div>
+</div>
 
       {/*  Przycisk dodania */}
+      
       <button onClick={addTask} aria-label="Dodaj zadanie">
         ➕ Dodaj
       </button>
