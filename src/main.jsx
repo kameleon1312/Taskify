@@ -1,7 +1,7 @@
 // ============================================================
-//  TASKINER™ ENTRY POINT v4.1
+//  TASKINER™ ENTRY POINT v4.2
 //  Autor: Szymon Pochopień
-//  Cel: Inicjalizacja aplikacji React + styl globalny + PWA auto-update
+//  Cel: React init + Global Styles + PWA auto-update (mobile ready)
 // ============================================================
 
 import React from "react";
@@ -10,7 +10,7 @@ import App from "./App.jsx";
 import "./styles/index.scss";
 
 // ============================================================
-//  CREATE ROOT & RENDER APP
+//  RENDER APP
 // ============================================================
 
 createRoot(document.getElementById("root")).render(
@@ -23,7 +23,7 @@ createRoot(document.getElementById("root")).render(
 //  SERVICE WORKER LOGIKA
 // ============================================================
 
-// 🔹 1️⃣ DEV HELPER — usuń starego SW w trybie deweloperskim
+// 🔹 DEV: usuń starego SW lokalnie
 if (import.meta.env.MODE === "development" && "serviceWorker" in navigator) {
   navigator.serviceWorker.getRegistrations().then((registrations) => {
     registrations.forEach((registration) => {
@@ -35,7 +35,7 @@ if (import.meta.env.MODE === "development" && "serviceWorker" in navigator) {
   console.log("🧩 Service Worker pominięty w trybie deweloperskim");
 }
 
-// 🔹 2️⃣ PRODUKCJA — rejestracja SW po buildzie (Vercel / serve dist)
+// 🔹 PROD: rejestracja SW
 if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
@@ -43,7 +43,7 @@ if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
       .then((registration) => {
         console.log("✅ Service Worker zarejestrowany:", registration.scope);
 
-        // 🔁 3️⃣ SPRAWDZANIE AKTUALIZACJI
+        // 🔁 Monitorowanie aktualizacji
         registration.onupdatefound = () => {
           const newWorker = registration.installing;
           if (newWorker) {
@@ -53,20 +53,23 @@ if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
                 navigator.serviceWorker.controller
               ) {
                 console.log("🔄 Nowa wersja Taskiner dostępna!");
-
-                // 🔔 Wyświetl subtelny baner o aktualizacji
                 showUpdateBanner(registration);
               }
             };
           }
         };
+
+        // 🕐 Sprawdzaj aktualizacje co 1 minutę (działa też w PWA)
+        setInterval(() => {
+          registration.update();
+        }, 60000);
       })
       .catch((err) => console.error("❌ Błąd rejestracji SW:", err));
   });
 }
 
 // ============================================================
-//  🔔 FUNKCJA: SUBTELNY BANNER AKTUALIZACJI
+//  🔔 FUNKCJA: BANNER AKTUALIZACJI
 // ============================================================
 
 function showUpdateBanner(registration) {
@@ -100,7 +103,7 @@ function showUpdateBanner(registration) {
     }
   });
 
-  // Odśwież stronę po aktywowaniu nowego SW
+  // Odśwież po aktywacji nowego SW
   navigator.serviceWorker.addEventListener("controllerchange", () => {
     window.location.reload();
   });
