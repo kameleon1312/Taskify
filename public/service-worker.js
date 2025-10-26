@@ -1,14 +1,14 @@
 // ==============================
-// Taskiner Service Worker (v2)
+// Taskiner Service Worker (v3)
 // ==============================
 
-const CACHE_NAME = "taskiner-cache-v2";
+const CACHE_NAME = "taskiner-cache-v3";
 const URLS_TO_CACHE = [
   "/",
   "/index.html",
   "/manifest.json",
   "/icons/icon-192x192.png",
-  "/icons/icon-512x512.png"
+  "/icons/icon-512x512.png",
 ];
 
 // Czy uruchomiono lokalnie?
@@ -22,23 +22,29 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(URLS_TO_CACHE))
   );
+  // ⬇️ natychmiastowa aktywacja nowej wersji
+  self.skipWaiting();
 });
 
 // Aktywacja – usuń stare cache
 self.addEventListener("activate", (event) => {
   if (isLocalhost) return;
   event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
+    (async () => {
+      const cacheNames = await caches.keys();
+      await Promise.all(
         cacheNames
           .filter((name) => name !== CACHE_NAME)
           .map((name) => caches.delete(name))
-      )
-    )
+      );
+      // ⬇️ od razu przejmij kontrolę nad wszystkimi otwartymi klientami
+      await self.clients.claim();
+      console.log("♻️ Nowy Service Worker aktywowany i cache wyczyszczony");
+    })()
   );
 });
 
-// Obsługa fetch – cache-first, ale filtruj nie-HTTP
+// Obsługa fetch – cache-first
 self.addEventListener("fetch", (event) => {
   if (isLocalhost) return;
   if (!event.request.url.startsWith("http")) return;
@@ -65,7 +71,6 @@ self.addEventListener("fetch", (event) => {
           return networkResponse;
         })
         .catch(() => {
-          // fallback offline dla widoków nawigacyjnych
           if (event.request.mode === "navigate") {
             return caches.match("/index.html");
           }
