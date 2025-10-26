@@ -90,10 +90,13 @@ function TaskItem({ task, toggleTask, deleteTask, updateTask }) {
 
         {/*  Wyświetlanie terminu */}
         {task.deadline && (
-          <small className="deadline">
-            Termin: {new Date(task.deadline).toLocaleDateString()}
-          </small>
-        )}
+  <span className="deadline">
+    Termin: {new Date(task.deadline).toLocaleString("pl-PL", {
+      dateStyle: "short",
+      timeStyle: "short",
+    })}
+  </span>
+)}
       </div>
 
       {/*  Usuń zadanie */}

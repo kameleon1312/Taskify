@@ -113,7 +113,7 @@ body[data-theme="light"] {
 .app {
   position: relative;
   width: 100%;
-  max-width: min(460px, 100%);
+  max-width: min(460px, auto);
   background: linear-gradient(
       135deg,
       rgba(255, 255, 255, 0.05),
@@ -155,8 +155,10 @@ body[data-theme="light"] {
   grid-template-columns: 1fr auto;
   gap: 12px;
   margin-bottom: 26px;
+  align-items: center;
 
-  input {
+  /* --- pole tekstowe --- */
+  input[type="text"] {
     padding: 13px 15px;
     border-radius: $radius;
     border: 2px solid rgba(255, 255, 255, 0.08);
@@ -166,6 +168,7 @@ body[data-theme="light"] {
     outline: none;
     transition: all 0.25s ease;
     box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.03);
+    width: 100%;
 
     &::placeholder {
       color: var(--muted);
@@ -179,6 +182,49 @@ body[data-theme="light"] {
     }
   }
 
+  /* --- sekcja data + godzina --- */
+  .datetime-inputs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+    width: 100%;
+
+    input[type="date"],
+    input[type="time"] {
+      flex: 1;
+      min-width: 0;
+      padding: 11px 12px;
+      border-radius: $radius;
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--fg);
+      font-size: 14px;
+      outline: none;
+      transition: all 0.25s ease;
+      appearance: none; // usuwa nienaturalny wygląd
+
+      &::placeholder {
+        color: var(--muted);
+        opacity: 0.7;
+      }
+
+      &:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 8px rgba(77, 148, 255, 0.25);
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      /* delikatny styl ikon kalendarza i zegara */
+      &::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+        opacity: 0.8;
+        cursor: pointer;
+        transform: scale(0.9);
+      }
+    }
+  }
+
+  /* --- przycisk Dodaj --- */
   button {
     padding: 13px 18px;
     border-radius: $radius;
@@ -190,11 +236,13 @@ body[data-theme="light"] {
     cursor: pointer;
     box-shadow: 0 3px 14px rgba(77, 148, 255, 0.4);
     transition: all 0.25s ease;
+    white-space: nowrap;
 
     &:hover {
       filter: brightness(1.1);
       transform: translateY(-1px);
     }
+
     &:active {
       transform: translateY(1px);
       filter: brightness(0.95);
@@ -202,6 +250,36 @@ body[data-theme="light"] {
   }
 }
 
+/* ============================================================
+   📱 MOBILE FIXES (max-width: 600px)
+   ============================================================ */
+@media (max-width: 600px) {
+  .task-input {
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+    input[type="text"] {
+      font-size: 14px;
+      padding: 11px 12px;
+    }
+
+    .datetime-inputs {
+      flex-direction: column;
+      gap: 10px;
+
+      input[type="date"],
+      input[type="time"] {
+        font-size: 14px;
+        padding: 10px 12px;
+      }
+    }
+
+    button {
+      font-size: 14px;
+      padding: 11px;
+    }
+  }
+}
 /* ============================================================
    5️⃣ TASK LIST & ITEMS
    ============================================================ */
